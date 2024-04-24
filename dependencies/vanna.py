@@ -5,8 +5,8 @@ from io import StringIO
 import pandas as pd
 import requests
 
-from .base.index import VannaBase
-from .types.index import (
+from .base import VannaBase
+from .types import (
     DataFrameJSON,
     Question,
     QuestionSQLPair,

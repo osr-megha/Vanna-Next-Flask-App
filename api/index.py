@@ -3,6 +3,8 @@ from flask import Flask, jsonify, Response, request
 from flask_cors import CORS
 import pandas as pd
 import os
+
+
 from dependencies.vanna import VannaDefault
 import sys
 
@@ -12,16 +14,20 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # VANNA INITIALIZATION
 vannakey = os.environ.get("VANNA_API_KEY")
-account = os.environ.get("SNOWFLAKE_ACCOUNT")
-username = os.environ.get("SNOWFLAKE_USERNAME")
-password = os.environ.get("SNOWFLAKE_PASSWORD")
-database = os.environ.get("SNOWFLAKE_DATABASE")
-role = os.environ.get("SNOWFLAKE_ROLE")
+# account = os.environ.get("SNOWFLAKE_ACCOUNT")
+# username = os.environ.get("SNOWFLAKE_USERNAME")
+# password = os.environ.get("SNOWFLAKE_PASSWORD")
+# database = os.environ.get("SNOWFLAKE_DATABASE")
+# role = os.environ.get("SNOWFLAKE_ROLE")
 model = os.environ.get("VANNA_MODEL")
 vn = VannaDefault(model=model, api_key=vannakey)
-vn.connect_to_snowflake(
-    account=account, username=username, password=password, database=database, role=role
-)
+# vn.connect_to_snowflake(
+#     account=account, username=username, password=password, database=database, role=role
+# )
+
+# vn.connect_to_postgres(host=os.environ['host'], dbname=os.environ['dbname'], user=os.environ['user'], password=os.environ['password'], port=os.environ['port'])
+# vn.allow_llm_to_see_data = True
+vn.connect_to_sqlite('https://vanna.ai/Chinook.sqlite')
 
 
 @app.route("/api/v1/generate_questions", methods=["GET"])
